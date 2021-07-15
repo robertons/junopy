@@ -20,6 +20,7 @@ class ChargeResource(JunoEntity):
 		cls.status= String(max=30)
 		cls.billetDetails = Obj(context=cls, key='billetDetails', name='BilletDetails')
 		cls.payments = ObjList(context=cls, key='payments', name='Payment')
+		cls.subscription = ObjList(context=cls, key='subscription', name='Subscription')
 		cls.pix = Obj(context=cls, key='pix', name='Pix')
 
 		super().__init__(**kw)

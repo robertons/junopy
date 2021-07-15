@@ -22,6 +22,7 @@ class Subscription(JunoEntity):
         cls.split = ObjList(context=cls, key='split', name='Split')
         cls.status = String(max=30)
         cls.startsOn = DateTime(format="%Y-%m-%d")
+        cls.lastBillingDate = DateTime(format="%Y-%m-%d")
         cls.nextBillingDate = DateTime(format="%Y-%m-%d")
 
         super().__init__(**kw)

@@ -14,6 +14,7 @@ class DigitalAccount(JunoEntity):
 		cls.status =  String(max=40)
 		cls.createdOn = DateTime(format="iso")
 		cls.resourceToken = String(max=200)
+		cls.personType = String(max=10)
 		cls.type = String(default="PAYMENT", required=True)
 		cls.name = String(max=80, required=True)
 		cls.motherName  = String(max=80, required=True)

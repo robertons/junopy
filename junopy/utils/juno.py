@@ -8,6 +8,7 @@ import json
 import os
 import io
 
+DEBUG = False
 TOKEN = {}
 SANDBOX = True
 CLIENTID = ''
@@ -27,10 +28,12 @@ def DebugRequest():
 def Juno(private_token, clientId, clientSecret, sandbox=True, debug=False):
     if debug:
         DebugRequest()
+    global DEBUG
     global TOKEN
     global SANDBOX
     global CLIENTID
     global CLIENTSECRET
+    DEBUG = debug
     SANDBOX = sandbox
     CLIENTID = clientId
     CLIENTSECRET = clientSecret
@@ -75,7 +78,7 @@ def __Route(url):
 
 
 def Get(url, data={}, aditional_header=None):
-    return __ValidateResponse(requests.get(__Route(url), data=data, headers=__headers(data, aditional_header)))
+    return __ValidateResponse(requests.get(__Route(url), params=data, headers=__headers(data, aditional_header)))
 
 
 def Post(url, data, aditional_header=None):
@@ -113,6 +116,8 @@ class RequestException(Exception):
 def __ValidateResponse(response):
     if response.status_code == 200 or response.status_code == 201:
         try:
+            if DEBUG:
+                print(f"Response:\n\n {json.dumps(response.json(), indent=4)} \n\n")
             return response.json()
         except:
             return response.text
