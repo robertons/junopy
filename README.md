@@ -111,11 +111,12 @@ chave_publica = junopy.util.PublicKey()
 ```
 
 **Validação Webhook**
+
 Todo Webhook recebido da Juno traz consigo uma assinatura no header da `Requisição Post`. A assinatura é um hash para validar a autenticidade do conteúdo.  
 
 Ao criar um Webhook é gerado uma chave que deve ser armazenada em segurança e utilizada neste processo.  
 
-**Leia atentamente como funciona o processo em [Criação e Assinatura de Webhook]**(https://dev.juno.com.br/api/v2#operation/createWebhook)
+**Leia atentamente como funciona o processo em [Criação e Assinatura de Webhook](https://dev.juno.com.br/api/v2#operation/createWebhook)**
 
 | campo | tipo | obrigatório |
 |--|--|--|
