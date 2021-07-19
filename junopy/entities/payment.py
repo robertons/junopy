@@ -9,7 +9,7 @@ class Payment(JunoEntity):
 
 		# FIELDS
 		cls.id = String(max=80)
-		cls.chargeId = String(max=80)
+		cls.chargeId = String(max=100)
 		cls.date = DateTime(format="iso")
 		cls.releaseDate = DateTime(format="iso")
 		cls.amount = Float(),

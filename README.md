@@ -1,5 +1,6 @@
 
 
+
 # SDK Python3 para Integração com Juno
 
 Esta SDK foi desenvolvida para abstrair aos desenvolvedores os principais detalhes da comunicação com API v2 da Juno tanto em [produção](https://juno.com.br/#) quanto em ambiente [sandbox](https://sandbox.juno.com.br/#).
@@ -107,6 +108,24 @@ tipos_empresas = junopy.util.BusinessAreas()
 **Chave Publica de Criptografia**
 ```python
 chave_publica = junopy.util.PublicKey()
+```
+
+**Validação Webhook**
+Todo Webhook recebido da Juno traz consigo uma assinatura no header da `Requisição Post`. A assinatura é um hash para validar a autenticidade do conteúdo.  
+
+Ao criar um Webhook é gerado uma chave que deve ser armazenada em segurança e utilizada neste processo.  
+
+**Leia atentamente como funciona o processo em [Criação e Assinatura de Webhook]**(https://dev.juno.com.br/api/v2#operation/createWebhook)
+
+| campo | tipo | obrigatório |
+|--|--|--|
+| x_signature | string | **sim** |
+| body_content | bytes |**sim** |
+| secret | string |**sim** |
+
+o retorno da função será `True` ou `False`
+```python
+webhook_valido = junopy.util.IsValidWebhook(x_signature, body_content, secret)
 ```
 
 # Conta Digital
