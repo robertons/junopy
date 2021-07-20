@@ -9,4 +9,11 @@
 * Inclusão de Arquivos de Exemplo
 
 ### 0.0.3
-* Inclusão de funçao para validação da Assinatura HMAC (SHA-256) de Webhook (campo X-Signature)
+* Inclusão de função para validação da Assinatura HMAC (SHA-256) de Webhook (campo X-Signature)
+
+### 0.0.4
+* Correção na inclusão de items relacionados em lista
+
+### 0.0.5
+* Correção campos no entity Payment Resource
+* Correção scale de casas decimais em campos tipos Decimal e Float

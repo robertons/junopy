@@ -7,6 +7,7 @@ import datetime
 class ValidateValue:
 
     def __init__(self, default=None, context=None, required=False, max=None, name=None, type=None, format=None, key=None):
+        self.scale = 2
         self.context = context
         self.required = required
         self.max = max

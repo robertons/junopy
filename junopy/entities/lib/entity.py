@@ -3,7 +3,8 @@
 from .datatype import *
 from junopy.utils.juno import *
 
-__methods__ = ['toJSON', 'load', 'add', 'Create', 'Update', 'Get', 'Delete', 'Deactivate', 'Reactivate', 'Cancel', 'Complete', 'SendFiles']
+__methods__ = ['toJSON', 'load', 'add', 'Create', 'Update', 'Get',
+               'Delete', 'Deactivate', 'Reactivate', 'Cancel', 'Complete', 'SendFiles']
 
 
 def EncodeValue(o, format=None):
@@ -41,11 +42,6 @@ class JunoEntity():
                                 self[k].value = kw[k]
                                 self.__metadata__['data'][k] = EncodeValue(
                                     self[k].value, self[k].format)
-                        elif self[k].__class__.__name__.startswith("Obj"):
-                            group_data = {key.replace(f"{k}.", ''): value for key,
-                                          value in kw.items() if key.startswith(f"{k}.")}
-                            if len(group_data) > 0:
-                                self.add(k, group_data)
                 except Exception as e:
                     raise Exception(f"Field [{k}] Value [{kw[k]}] Error : {e}")
 
@@ -58,11 +54,13 @@ class JunoEntity():
                     data if isinstance(data, list) else [data])
 
                 if hasattr(data, 'values'):
+
                     self[key].value.extend([self[key].type(context={'entity': self, 'key': key}, **item) for item in data if any(item.values(
                     ))] if isinstance(data, list) else [self[key].type(context={'entity': self, 'key': key}, **data)] if any(data.values()) else [])
-                elif isinstance(data, list):
-                    self[key].value.extend(data)
 
+                elif isinstance(data, list):
+                    self[key].value.extend([self[key].type(item) if isinstance(item, str) or isinstance(
+                        item, int) else self[key].type(context={'entity': self, 'key': key}, **item) for item in data if not item is None])
             else:
                 data = data[0] if isinstance(data, list) else data
                 if any(data.values()):
