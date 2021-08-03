@@ -22,5 +22,6 @@ class ChargeResource(JunoEntity):
 		cls.payments = ObjList(context=cls, key='payments', name='Payment')
 		cls.subscription = ObjList(context=cls, key='subscription', name='Subscription')
 		cls.pix = Obj(context=cls, key='pix', name='Pix')
+		cls.imageInBase64 = String(max=80)
 
 		super().__init__(**kw)

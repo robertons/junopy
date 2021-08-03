@@ -9,7 +9,7 @@ with open('requirements.txt') as reqs:
 
 setuptools.setup(
     name='junopy',
-    version='0.0.5',
+    version='0.0.6',
     description='SDK Python3 para Integração com Juno API V2',
     author='Roberto Neves',
     author_email='robertonsilva@gmail.com',

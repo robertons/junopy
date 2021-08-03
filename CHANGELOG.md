@@ -17,3 +17,6 @@
 ### 0.0.5
 * Correção campos no entity Payment Resource
 * Correção scale de casas decimais em campos tipos Decimal e Float
+
+### 0.0.6
+* Correção campo PixKey para cobrança BOLETO_PIX

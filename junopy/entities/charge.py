@@ -8,7 +8,7 @@ class Charge(JunoEntity):
 		cls.__metadata__ = {}
 
 		# FIELDS
-		cls.pixKey = String(max=80)
+		cls.pixKey = String(max=160)
 		cls.pixIncludeImage = Boolean(default=False, required=True)
 		cls.description = String(max=80)
 		cls.references = ObjList(context=cls, key='references', name='str')
