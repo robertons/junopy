@@ -55,7 +55,10 @@ def GetToken():
 
 
 def __headers(data=None, aditional_header=None):
+
     resource_token = data['resourceToken'] if data and 'resourceToken' in data else None
+    if resource_token is None:
+        resource_token = aditional_header['resourceToken'] if aditional_header and 'resourceToken' in aditional_header else None
 
     if not 'TYPE' in TOKEN or not 'TOKEN' in TOKEN or not 'EXPIRES' in TOKEN:
         GetToken()
@@ -90,7 +93,10 @@ def Put(url, data, aditional_header=None):
 
 
 def Patch(url, data, aditional_header=None):
-    return __ValidateResponse(requests.patch(__Route(url), json=data, headers=__headers(data, aditional_header)))
+    post_data = dict(data)
+    if 'resourceToken' in post_data:
+        del post_data['resourceToken']
+    return __ValidateResponse(requests.patch(__Route(url), json=post_data, headers=__headers(data, aditional_header)))
 
 
 def Delete(url, aditional_header=None):
@@ -108,24 +114,40 @@ def UploadMultiPart(url, files, data=None, aditional_header=None):
     return __ValidateResponse(requests.post(__Route(url), data=m, headers=__headers(data, {'Content-Type': m.content_type})))
 
 
-class RequestException(Exception):
-    def __init__(self, msg, errors):
-        Exception.__init__(self, msg)
+class JunoException(Exception):
+    def __init__(self, message, detail):
+        self.message = message
+        self.detail = detail
 
 
 def __ValidateResponse(response):
-    if response.status_code == 200 or response.status_code == 201:
+
+    if response.status_code == 200:
         try:
             if DEBUG:
                 print(f"Response:\n\n {json.dumps(response.json(), indent=4)} \n\n")
             return response.json()
         except:
+            if DEBUG:
+                print(f"Response:\n\n {response.text} \n\n")
             return response.text
-    elif response.status_code != 204:
+    elif response.status_code == 204:
+        # RESPONSE OK - NO CONTENT
+        return None
+    elif response.status_code > 204:
         status_code = response.status_code
         try:
             response_json = response.json()
         except Exception as e:
-            response_json = {'errors': [{'description': 'JUNO ERROR: ' + str(e)}]}
-        error_message = f"\n\n JUNO REQUEST ERROR: \n\n STATUS {str(status_code)} \n\n Request not sent. May contain errors as missing required parameters or transcription error. \n\n\n Response: \n\n {json.dumps(response_json, indent=4, ensure_ascii=False)} \n\n"
-        raise RequestException(error_message, response_json)
+            response_json = {
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "status": status_code,
+                "error": "Internal Server Error",
+                "details": [
+                    {
+                        "message": str(e),
+                        "errorCode": "0"
+                    }
+                ]
+            }
+        raise JunoException("Juno Request Error", response_json)

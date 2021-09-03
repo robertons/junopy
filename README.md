@@ -201,7 +201,7 @@ No exemplo abaixo foram utilizados os 3 métodos de criação de objeto de forma
     		state = 'UF',
     		postCode = '99999999'
     })
-	conta = junopy.DigitalAccount().Update()
+	conta.Update()
 ```
 
 ##  Soluções Whitelabel

@@ -7,5 +7,8 @@ def Balance(resourceToken=None):
         data = Get("/balance")
     else:
         data = Get("/balance", {'resourceToken': resourceToken})
-    del data['_links']
+    try:
+        del data['_links']
+    except Exception as e:
+        pass
     return data

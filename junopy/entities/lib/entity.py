@@ -112,9 +112,12 @@ class JunoEntity():
         except Exception as e:
             raise e
 
-    def Create(self):
+    def Create(self, resourceToken=None):
         if hasattr(self, '__route__'):
-            data = Post(self.__route__, self.toJSON())
+            aditional_header = None
+            if not resourceToken is None:
+                aditional_header = {'resourceToken':resourceToken}
+            data = Post(self.__route__, self.toJSON(), aditional_header)
             self.load(**data)
         else:
             raise Exception("Method Create not allowed this object")
@@ -126,7 +129,7 @@ class JunoEntity():
             if hasattr(self, '__requireid__'):
                 if self.__requireid__ == True and self.id is None:
                     raise Exception("ID object required")
-                if self.id is not None:
+                if self.id is not None and self.__requireid__ == True:
                     route = f"{route}/{self.id}"
                     self.id = None
             data = Patch(route, self.toJSON())

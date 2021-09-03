@@ -20,5 +20,5 @@ class Transfer(JunoEntity):
 		cls.digitalAccountId = String(max=80, required=True)
 		cls.status = String(max=40)
 		cls.recipient = Obj(context=cls, key='recipient', name='Recipient')
-
+		
 		super().__init__(**kw)

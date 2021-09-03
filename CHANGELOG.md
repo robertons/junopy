@@ -20,3 +20,8 @@
 
 ### 0.0.6
 * Correção campo PixKey para cobrança BOLETO_PIX
+
+### 0.0.7
+* Correção uptade de Conta Digital - Id Não Requerido
+* Correção transferência com ResourceToken - Solução Whitelabel/Conta Digital
+* Correção webhooks com ResourceToken - Solução Whitelabel/Conta Digital
